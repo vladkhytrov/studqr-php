@@ -35,8 +35,7 @@ class AuthTest extends TestCase
         $response->assertStatus(201);
 
         // todo user factory
-
-        $user = User::where('email', 'test@email.com')->first();
+        $user = User::query()->where('email', 'test@email.com')->first();
 
         self::assertNotNull($user);
     }
