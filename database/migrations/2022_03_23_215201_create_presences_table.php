@@ -8,18 +8,17 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::create('presences', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('event_id');
+            $table->string('qr_id')->unique();
+            $table->unsignedInteger('lecture_id');
             $table->unsignedInteger('user_id');
-            $table->foreign('event_id')
+            $table->foreign('lecture_id')
                 ->references('id')
-                ->on('events')
+                ->on('lectures')
                 ->onDelete('cascade');
             $table->foreign('user_id')
                 ->references('id')
@@ -31,10 +30,8 @@ return new class extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('presences');
     }

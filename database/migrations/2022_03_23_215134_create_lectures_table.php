@@ -1,6 +1,6 @@
 <?php
 
-use App\Enum\EventStatus;
+use App\Enum\LectureStatus;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -9,17 +9,15 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
-    public function up()
+    public function up(): void
     {
-        Schema::create('events', function (Blueprint $table) {
+        Schema::create('lectures', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('status')->default(EventStatus::RUNNING);
-            $table->unsignedInteger('owner_id');
-            $table->foreign('owner_id')
+            $table->string('status')->default(LectureStatus::IDLE->value);
+            $table->unsignedInteger('teacher_id');
+            $table->foreign('teacher_id')
                 ->references('id')
                 ->on('users')
                 ->onDelete('cascade');
@@ -29,11 +27,9 @@ return new class extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
-    public function down()
+    public function down(): void
     {
-        Schema::dropIfExists('events');
+        Schema::dropIfExists('lectures');
     }
 };

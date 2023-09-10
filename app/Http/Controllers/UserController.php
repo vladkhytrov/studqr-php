@@ -45,10 +45,10 @@ class UserController extends Controller
     /**
      * @param Request $request
      *
-     * @return string
+     * @return JsonResponse
      * @throws ValidationException
      */
-    public function login(Request $request): string
+    public function login(Request $request): JsonResponse
     {
         return $this->userService->login($request);
     }
